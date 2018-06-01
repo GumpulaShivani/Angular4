@@ -1,38 +1,43 @@
 package com.ts.dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.ts.dao.Projects;
+import com.ts.dao.DAOUtility;
 
 public class ProjectsDAO {
+	
 	DAOUtility util = new DAOUtility();
 	Connection con;
 	PreparedStatement ps;
 	ResultSet rs;
 	String sql;
 	int status;
-	
-	public Projects save(Projects projects) {
-		sql = "insert into projects values(?, ?, ?, ?)";
+	public Projects getProjects(String lang_name) {
+		Projects p = new Projects();
+		sql = "select * from projects where lang_name = java";
 		try {
 			con = util.getConncetion();
 			ps = con.prepareStatement(sql);
-			ps.setString(1, projects.getPrjct_id());
-			ps.setString(2, projects.getPrjct_name());
-			ps.setString(3, projects.getDescription());
-			ps.setString(4, projects.getLang_name());
-			status = ps.executeUpdate();
-		}
-		catch(Exception e) {
+			ps.setString(1, lang_name);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				p.setPrjct_id(rs.getString(1));
+				p.setPrjct_name(rs.getString(2));
+				p.setDescription(rs.getString(3));
+				//p.setCity(rs.getString(4));
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		if(status>0) {
-			System.out.println("Success");
-		}
-		
-		return projects;
+		return p;
 	}
-
-
+	public List<Projects> getAllProjects() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
