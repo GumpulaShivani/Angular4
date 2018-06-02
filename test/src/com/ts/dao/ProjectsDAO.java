@@ -10,34 +10,43 @@ import com.ts.dao.Projects;
 import com.ts.dao.DAOUtility;
 
 public class ProjectsDAO {
-	
-	DAOUtility util = new DAOUtility();
-	Connection con;
-	PreparedStatement ps;
-	ResultSet rs;
-	String sql;
-	int status;
-	public Projects getProjects(String lang_name) {
-		Projects p = new Projects();
-		sql = "select * from projects where lang_name = java";
+
+	/*
+	 * DAOUtility util = new DAOUtility(); Connection con; PreparedStatement ps;
+	 * ResultSet rs; String sql; int status;
+	 */
+
+	// public Projects getProjects(String lang_name) {
+
+	public List<Projects> getAllProjects() {
+		Projects p;
+		List<Projects> projects = new ArrayList();
+		// Projects p = new Projects();
+
+		String sql = "select * from projects";
 		try {
-			con = util.getConncetion();
-			ps = con.prepareStatement(sql);
-			ps.setString(1, lang_name);
-			rs = ps.executeQuery();
-			if(rs.next()) {
+			DAOUtility util = new DAOUtility();
+			Connection connection = util.getConncetion();
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				p = new Projects();
 				p.setPrjct_id(rs.getString(1));
 				p.setPrjct_name(rs.getString(2));
 				p.setDescription(rs.getString(3));
-				//p.setCity(rs.getString(4));
+				System.out.println(p);
+				projects.add(p);
+				System.out.println(p.getLang_name());
+				// p.setCity(rs.getString(4));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return p;
-	}
-	public List<Projects> getAllProjects() {
+		System.out.println(projects);
+		return projects;
+
+		// public List<Projects> getAllProjects() {
 		// TODO Auto-generated method stub
-		return null;
+		//return null;
 	}
 }

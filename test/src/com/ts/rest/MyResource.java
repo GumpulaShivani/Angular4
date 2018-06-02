@@ -81,11 +81,11 @@ public class MyResource {
     
 
     @GET
-    @Path("/register1")
+    @Path("/projectdetails")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Projects> getData() throws ClassNotFoundException, SQLException {
-    	System.out.println("hi in dao");
-    	ProjectsDAO projects_dao = new ProjectsDAO();
+    	 System.out.println("hi in dao");
+    	ProjectsDAO projects_dao = new ProjectsDAO(); 
     	List<Projects> list = new ArrayList<Projects>();
     	list = projects_dao.getAllProjects();
     	System.out.println(list);
